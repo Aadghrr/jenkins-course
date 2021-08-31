@@ -4,6 +4,7 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
+        
         stage('Build') { 
             steps { 
         git(url: 'https://github.com/Aadghrr/jenkins-course/', branch: 'main', poll: true)
@@ -11,11 +12,17 @@ pipeline {
 
             }
         }
+        parallel {
         stage('Test'){
             steps {
-        git(url: 'https://github.com/Aadghrr/jenkins-course/', branch: 'main', poll: true)
         sh 'mvn -f maven-static-code-analysis clean test'
             }
+        }
+        stage('Site'){
+            steps {
+        sh 'mvn -f maven-static-code-analysis site'
+            }
+        }
         }
         stage('Deploy') {
             when { branch 'master' }
