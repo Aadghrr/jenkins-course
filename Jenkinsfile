@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps { 
-                rtMavenRun (
+                maven (
                     pom: 'maven-code-coverage/pom.xml',
                     goals: 'clean package'
                     )
@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Test'){
             steps {
-                rtMavenRun (
+                maven (
                     pom: 'maven-code-coverage/pom.xml',
                     goals: 'clean test',
                    )
