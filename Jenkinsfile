@@ -7,17 +7,14 @@ pipeline {
         stage('Build') { 
             steps { 
                 maven (
-                    pom: 'maven-code-coverage/pom.xml',
-                    goals: 'clean package'
-                    )
+                    sh '''cd maven-code-coverage
+                           mvn clean package''')
             }
         }
         stage('Test'){
             steps {
                 maven (
-                    pom: 'maven-code-coverage/pom.xml',
-                    goals: 'clean test',
-                   )
+                    sh ''' mvn clean package''')
             }
         }
         stage('Deploy') {
