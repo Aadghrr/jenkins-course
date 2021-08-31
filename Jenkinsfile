@@ -8,7 +8,8 @@ pipeline {
             steps { 
                 rtMavenRun (
                     pom: 'maven-code-coverage/pom.xml',
-                    goals: 'clean package',
+                    goals: 'clean package'
+                    )
             }
         }
         stage('Test'){
@@ -16,12 +17,18 @@ pipeline {
                 rtMavenRun (
                     pom: 'maven-code-coverage/pom.xml',
                     goals: 'clean test',
+                   )
             }
         }
         stage('Deploy') {
             steps {
-                archiveArtifacts artifacts: 'maven-code-coverage/target/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'maven-code-coverage/target/*.jar'
             }
+        }
+    }
+        post {
+            always{
+                echo 'Hello world'
         }
     }
 }
