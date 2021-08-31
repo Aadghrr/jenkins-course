@@ -6,20 +6,20 @@ pipeline {
     stages {
         stage('Build') { 
             steps { 
-                maven (
-                    sh '''cd maven-code-coverage
-                           mvn clean package''')
+        git(url: 'https://github.com/Aadghrr/jenkins-course/', branch: 'main', poll: true)
+        sh 'mvn -f maven-static-code-analysis clean package'
+
             }
         }
         stage('Test'){
             steps {
-                maven (
-                    sh ''' mvn clean package''')
+        git(url: 'https://github.com/Aadghrr/jenkins-course/', branch: 'main', poll: true)
+        sh 'mvn -f maven-static-code-analysis clean test'
             }
         }
         stage('Deploy') {
             steps {
-                archiveArtifacts artifacts: 'maven-code-coverage/target/*.jar'
+                archiveArtifacts artifacts: 'maven-static-code-analysis/target/*.jar'
             }
         }
     }
