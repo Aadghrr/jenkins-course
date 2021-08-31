@@ -1,15 +1,26 @@
-pipeline {
-    agent any
-
+pipeline { 
+    agent any 
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
+        stage('Build') { 
+            steps { 
+                rtMavenRun (
+                    pom: 'maven-code-coverage/pom.xml',
+                    goals: 'clean package',
             }
         }
-        stage('Curl') {
+        stage('Test'){
             steps {
-                sh 'curl "http://worldtimeapi.org/api/timezone/Europe/Dublin"'
+                rtMavenRun (
+                    pom: 'maven-code-coverage/pom.xml',
+                    goals: 'clean test',
+            }
+        }
+        stage('Deploy') {
+            steps {
+                archiveArtifacts artifacts: 'maven-code-coverage/target/*.jar', fingerprint: true
             }
         }
     }
