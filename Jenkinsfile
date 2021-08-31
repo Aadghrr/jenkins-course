@@ -1,3 +1,4 @@
+def app = 'maven-static-code-analysis'
 pipeline { 
     agent any 
     options {
@@ -7,24 +8,24 @@ pipeline {
         stage('Build') { 
             steps { 
         git(url: 'https://github.com/Aadghrr/jenkins-course/', branch: 'main', poll: true)
-        sh 'mvn -f maven-static-code-analysis clean package'
+        sh 'mvn -f ${app} clean package'
 
             }
         }
         stage('Test'){
             steps {
-        sh 'mvn -f maven-static-code-analysis clean test'
+                sh 'mvn -f ${app} clean test'
             }
         }
         stage('Site'){
             steps {
-        sh 'mvn -f maven-static-code-analysis site'
+        sh 'mvn -f ${app} site'
             }
         }
         stage('Deploy') {
             when { branch 'master' }
             steps {
-                archiveArtifacts artifacts: 'maven-static-code-analysis/**/*.jar'
+                archiveArtifacts artifacts: '${app}/**/*.jar'
             }
         }
     }
