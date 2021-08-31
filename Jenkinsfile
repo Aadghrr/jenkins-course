@@ -4,7 +4,6 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        
         stage('Build') { 
             steps { 
         git(url: 'https://github.com/Aadghrr/jenkins-course/', branch: 'main', poll: true)
