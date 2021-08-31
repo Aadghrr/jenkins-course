@@ -18,6 +18,7 @@ pipeline {
             }
         }
         stage('Deploy') {
+            when { branch 'master' }
             steps {
                 archiveArtifacts artifacts: 'maven-static-code-analysis/**/*.jar'
             }
