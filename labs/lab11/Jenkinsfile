@@ -6,9 +6,10 @@ node('small') {
         sh "mvn clean compile -f ${app}"
 
     }
+}
+node('large'){
     stage('Test') {
         sh "mvn clean test -f ${app}"
-
         // In scripted pipelines we don't have post actions!
         junit '**/target/surefire-reports/TEST-*.xml'
         jacoco buildOverBuild: true, deltaBranchCoverage: '80', deltaClassCoverage: '80', deltaComplexityCoverage: '80', deltaInstructionCoverage: '80', deltaLineCoverage: '80', deltaMethodCoverage: '80'
