@@ -1,5 +1,5 @@
+def app = "maven-static-code-analysis"
 pipeline { 
-    def app = 'maven-static-code-analysis'
     agent any 
     options {
         skipStagesAfterUnstable()
