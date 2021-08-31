@@ -11,7 +11,6 @@ pipeline {
 
             }
         }
-        parallel {
         stage('Test'){
             steps {
         sh 'mvn -f maven-static-code-analysis clean test'
@@ -21,7 +20,6 @@ pipeline {
             steps {
         sh 'mvn -f maven-static-code-analysis site'
             }
-        }
         }
         stage('Deploy') {
             when { branch 'master' }
