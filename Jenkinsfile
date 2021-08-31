@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                archiveArtifacts artifacts: 'maven-static-code-analysis/target/*.jar'
+                archiveArtifacts artifacts: 'maven-static-code-analysis/**/*.jar'
             }
         }
     }
@@ -27,5 +27,8 @@ pipeline {
             always{
                 echo 'Hello world'
         }
+            failure{
+                echo 'Failed'
+            }
     }
 }
